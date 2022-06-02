@@ -147,20 +147,27 @@
 
   tabs.forEach((elmt, i) => {
     elmt.addEventListener('click', () => {
-      tabs.forEach((elmt2, i) => {
-        elmt2.classList.remove('active');
-      });
-      elmt.classList.add('active');
-      var dataSnClick = elmt.getAttribute('data-sn-click');
-      if (dataSnClick == 'overview') {
-        id('guild--guild-info').style.display = 'block';
-      } else {
-        id('guild--guild-info').style.display = 'none';
+      try {
+        tabs.forEach((elmt2, i) => {
+          elmt2.classList.remove('active');
+        });
+        elmt.classList.add('active');
+        var dataSnClick = elmt.getAttribute('data-sn-click');
+        if (dataSnClick == 'overview') {
+          id('guild--guild-info').style.display = 'block';
+        } else {
+          id('guild--guild-info').style.display = 'none';
+        }
+        sections.forEach((elmt3, i) => {
+          elmt3.style.display = 'none';
+        });
+        document.querySelector('div.guild div.content div.commands div.section[data-sn=' + dataSnClick + ']').style.display = 'block';
+      } catch {
+        sections.forEach((elmt3, i) => {
+          elmt3.style.display = 'none';
+        });
+        document.querySelector('div.guild div.content div.commands div.section[data-sn=404-page').style.display = 'block';
       }
-      sections.forEach((elmt3, i) => {
-        elmt3.style.display = 'none';
-      });
-      document.querySelector('div.guild div.content div.commands div.section[data-sn=' + dataSnClick + ']').style.display = 'block';
     });
   });
   document.querySelector('div.guild div.tabs ul.items li.item[data-sn-click=overview]').click();
